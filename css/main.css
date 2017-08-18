@@ -1,0 +1,148 @@
+/*!
+ * Bootstrap v3.3.6 (http://getbootstrap.com)
+ * Copyright 2011-2015 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+/*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
+.rojo {
+	background-color: rgb(217, 83, 79);
+	border-radius: 50%;
+	width: 30px;
+	height: 30px;
+	float: left;
+	margin-right: 3px;
+	cursor: pointer;
+}
+
+.amarillo {
+	background-color: rgb(240, 173, 78);
+	border-radius: 50%;
+	width: 30px;
+	height: 30px;
+	float: left;
+	margin-right: 3px;
+	cursor: pointer;
+}
+
+.verde {
+	background-color: rgb(92, 184, 92);
+	border-radius: 50%;
+	width: 30px;
+	height: 30px;
+	float: left;
+	margin-right: 3px;
+	cursor: pointer;
+}
+
+#contenidoTabla td {
+	font-size: 1.8em;
+	cursor: pointer;
+}
+
+.btn-default:focus, .btn-default:active, .btn-default.active {
+	background-color: #ffffff;
+}
+
+.btn-default:hover {
+	background-color: #ebebeb;
+}
+
+.btn:focus {
+	outline: none;
+}
+
+body {
+	padding-top: 70px;
+}
+
+.refresh {
+	padding-top: -100px;
+}
+
+.caja1 {
+	height: 23px;
+	width: 100%;
+}
+
+.color {
+	background-color: red;
+}
+
+#example {
+	border: 2px solid black;
+}
+
+#example tr td, tr th {
+	border: 3px solid white;
+}
+
+#example td, th {
+	width: 17%;
+}
+
+#example .label {
+	font-size: 1.3em;
+}
+
+.titulo {
+	font-size: 1.4em;
+	height: 42px;
+	padding-top: 5px;
+	border-bottom: 1px solid rgb(204, 204, 204);
+}
+
+#example {
+	font-size: 1em;
+}
+
+.label-info {
+	font-size: 1.2em;
+}
+
+#contenidoTabla .empresa {
+	font-size: 1.0em;
+	text-align: center;
+	background-color: #ddd;
+	font-weight: bold;
+}
+
+thead th {
+	text-align: center;
+	background-color: #ddd;
+}
+
+.general b {
+	font-size: 1.4em;
+}
+
+ .general{
+        border: 1px solid rgb(173, 173, 173);
+        padding: 6px;
+        border-radius: 4px;
+        
+    }
+
+@media ( max-width : 376px) {
+	.col-md-12, .col-sm-12 {
+		padding-left: 0px;
+		padding-right: 0px;
+	}
+	#example tr td, tr th {
+		border: 2px solid white;
+	}
+	#example {
+		font-size: 0.7em;
+	}
+	#tickets {
+		font-size: 0.8em;
+	}
+	b {
+		font-size: 1.2em;
+	}
+	button {
+		padding-bottom: 2px;
+	}
+	#velocimetro {
+		height: 200px;
+	}
+}

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Configuracion de Planes</title>
+		<meta charset="UTF-8">
+		<script src="jquery-2.2.1.min.js"></script>
+
+		<script src="Highcharts-4/js/highcharts.js"></script>
+		<script src="Highcharts-4/js/highcharts-more.js"></script>
+		<script src="Highcharts-4/js/modules/exporting.js"></script>
+
+		<link href="dist/css/bootstrap.css" rel="stylesheet" type="text/css" />
+		<script src="dist/js/bootstrap.js"></script>
+		<link href="css/docs.min.css" rel="stylesheet" type="text/css" />
+		<meta name="viewport"
+			  content="width=device-width, initial-scale=1, maximum-scale=0.9">
+
+		<script src="js/getProyectos.js?v=0.234"></script>
+		
+		<link type="text/css" rel="stylesheet" href="css/main.css?v=1.1">
+		<style>
+			#logo{
+				position: relative;
+				top:-14px;
+			}
+			#grafico{
+				width: 100%;
+				height: 430; /* 180 cargo fijo +  50 por banda= 250=430*/
+			
+			}
+			.col-md-12{
+							
+				padding: 0px !important;
+
+			}
+		</style>
+		<script>
+			var descripcion;
+			var tasks = [];
+			
+			/* debe estar invertido*/
+			var mapComplete =[];
+			var mapWork =[] ;
+			
+			var plotBands=[];
+			var categories=[];
+
+			var minYYYY;
+			var minMM;
+			var minDD;
+			
+			var maxYYYY;
+			var maxMM;
+			var maxDD;
+			
+			
+			$(document).ready(
+				function() {
+					getProyectos();
+					pintarGrafico();
+				});
+	
+			
+			function getFecha(){
+				var hoy = new Date();
+				var dd = hoy.getDate();
+				var mm = hoy.getMonth()+1;
+				var yyyy = hoy.getFullYear();
+				if(dd<10) {
+					dd='0'+dd
+				} 
+				if(mm<10) {
+					mm='0'+mm
+				} 
+				hoy = dd+'-'+mm+'-'+yyyy;
+				return hoy;
+			}
+
+			function pintarGrafico(){
+				var hoy = new Date();
+				var dd = hoy.getDate();
+				var mm = hoy.getMonth();
+				var yyyy = hoy.getFullYear();
+
+				if(dd<10) {
+					dd='0'+dd
+				} 
+				if(mm<10) {
+					mm='0'+mm
+				} 
+				
+				// Define tasks en el orden correcto, se resta -1 al mes
+				/*
+		   	var milestones = [{
+		   	    name: 'Inicio',
+		   	    time: Date.UTC(2017, 05, 16,22),
+		   	    task: 1,
+		   	    marker: {
+		   	        symbol: 'triangle',
+		   	        lineWidth: 1,
+		   	        lineColor: 'black',
+		   	        radius: 8
+		   	    }
+		   	}];*/
+
+				// re-structure the tasks into line seriesvar series = [];
+				var series = [];
+				$.each(tasks.reverse(), function(i, task) {
+					var item = {
+						name: task.name,
+						/* color:'#94e2af',*/
+						data: []
+					};
+					$.each(task.intervals, function(j, interval) {
+						item.data.push({
+							x: interval.from,
+							y: i,
+							label: interval.label,
+							from: interval.from,
+							to: interval.to
+						}, {
+							x: interval.to,
+							y: i,
+							from: interval.from,
+							to: interval.to
+						});
+
+						// add a null value between intervals
+						if (task.intervals[j + 1]) {
+							item.data.push(
+								[(interval.to + task.intervals[j + 1].from) / 2, null]
+							);
+						}
+					});
+
+					series.push(item);
+				});
+
+				/*
+		   	$.each(milestones, function(i, milestone) {
+		   	    var item = Highcharts.extend(milestone, {
+		   	        data: [[
+		   	            milestone.time,
+		   	            milestone.task
+		   	        ]],
+		   	        type: 'scatter'
+		   	    });
+		   	    series.push(item);
+		   	});*/
+
+
+				// create the chart
+				var chart = new Highcharts.Chart({
+					chart: {
+						renderTo: 'grafico'
+					},
+
+					title: {
+						text: 'Proyectos de Entel'
+					},
+
+					xAxis: {
+						type: 'datetime',
+						min: Date.UTC(minYYYY,minMM-1,minDD),
+						max: Date.UTC(maxYYYY,maxMM-1,maxDD),
+						tickInterval: 24 * 3600 * 1000 * 8,
+						plotLines: [
+							{
+								color: 'red', // Color value
+								dashStyle: 'longdashdot', // Style of the plot line. Default to solid
+							    value: Date.UTC(yyyy,mm,dd), // Fecha de Hoy
+								width: 2, // Width of the line  
+								zIndex: 4,
+								label:{
+									align:'left',
+									rotation:undefined,
+									style:undefined,
+									textAlign:undefined,
+									text:getFecha(),
+									useHTML:false,
+									verticalAlign:'top',
+									color:'red'
+								}
+							}
+						]
+					},
+
+					yAxis: {
+							plotBands: plotBands,
+						categories:categories,
+						tickInterval: 1,
+						tickPixelInterval: 200,
+
+						labels: {
+							style: {
+								color: '#525151',
+								font: '12px Helvetica',
+								fontWeight: 'bold'
+							},
+							/* formatter: function() {
+		   	                if (tasks[this.value]) {
+		   	                    return tasks[this.value].name;
+		   	                }
+		   	            }*/
+						},
+						startOnTick: false,
+						endOnTick: true,
+						title: {
+							text: 'Proyectos'
+						},
+						minPadding: 0.2,
+						maxPadding: 0.2,
+						fontSize:'15px'
+					},
+
+					legend: {
+						enabled: true,
+						align:'right',
+						borderBottomColor: '#000'
+					},
+					tooltip: {
+						formatter: function() {
+							return '<b>'+ tasks[this.y].name + '</b><br/>' +
+								Highcharts.dateFormat('%d-%m-%Y', this.point.options.from)  +
+								' hasta ' + Highcharts.dateFormat('%d-%m-%Y', this.point.options.to)
+								+'<br><b>Work:</b>'+mapWork[this.y]
+								+'<br><b>Completado:</b> ' + mapComplete[this.y]; 
+						}
+					},
+
+					plotOptions: {
+						line: {
+							lineWidth: 10,
+							marker: {
+								enabled: false
+							},
+							dataLabels: {
+								enabled: true,
+								align: 'left',
+								formatter: function() {
+									return this.point.options && this.point.options.label;
+								}
+							}
+						}
+					},
+					series: series
+				});		   
+			}
+		</script>
+
+	</head>
+
+	<body>
+		<nav class="navbar navbar-default navbar-fixed-top">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed"
+							data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+							aria-controls="navbar">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand"> 
+						<img src="imag/logo%20(3).png" id="logo" class="icon-bar" width="130px">
+					</a>
+				</div>
+				<div id="navbar" class="navbar-collapse collapse">
+					<ul class="nav navbar-nav">
+						<li class="active"><a href="index.html">Proyectos</a></li>
+					</ul>
+
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="http://www.accenture.com" target="_blank">Powered
+							by Accenture</a></li>
+					</ul>
+				</div>
+				<!--/.nav-collapse -->
+			</div>
+		</nav>
+
+
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div id="grafico"></div>
+				</div>
+			</div>
+		</div>
+
+	</body>
+</html>

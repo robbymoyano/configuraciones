@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data>
+	<proyectos min="20170703" max="20170821">
+		<proyecto>
+			<name>PRO09812 - Planes Pivotes Voz Para Oferta Empresa Conectada</name>
+			<dateStart>20170703</dateStart>
+			<dateEnd>20170821</dateEnd>
+			<label>PRO09812 - Planes Pivotes Voz Para Oferta Empresa Conectada</label>
+			<work>90 hrs</work>
+			<completado>95%</completado>
+		</proyecto>
+		<proyecto>
+			<name>Planes SIM ONLY Empresa y con equipo</name>
+			<dateStart>20170801</dateStart>
+			<dateEnd>20170813</dateEnd>
+			<label>Planes SIM ONLY Empresa y con equipo</label>
+			<work>200 hrs</work>
+			<completado>70%</completado>
+		</proyecto>
+		<proyecto>
+			<name>PRO10145 - Autogestión Ilimitado</name>
+			<dateStart>20170714</dateStart>
+			<dateEnd>20170808</dateEnd>
+			<label>PRO10145 - Autogestión Ilimitado</label>
+			<work>80 hrs</work>
+			<completado>100%</completado>
+		</proyecto>
+		<proyecto>
+			<name>Celula BAFI, pre_factibilidad</name>
+			<dateStart>20170727</dateStart>
+			<dateEnd>20170808</dateEnd>
+			<label>Celula BAFI, pre_factibilidad</label>
+			<work>90 hrs</work>
+			<completado>90%</completado>
+		</proyecto>
+		<proyecto>
+			<name>PRO10209 _proyecto Black Jack</name>
+			<dateStart>20170725</dateStart>
+			<dateEnd>20170811</dateEnd>
+			<label>PRO10209 _proyecto Black Jack</label>
+			<work>50 hrs</work>
+			<completado>100%</completado>
+		</proyecto>
+	</proyectos>
+	<categorias>
+		<categoria>
+			<name>Empresas</name>
+			<size>3</size>
+			<color>eee</color>
+		</categoria>
+		<categoria>
+			<name>Personas Hogar</name>
+			<size>1</size>
+			<color>fff</color>
+		</categoria>
+		<categoria>
+			<name>Personas Consumidores</name>
+			<size>1</size>
+			<color>eee</color>
+		</categoria>
+	</categorias>
+</data>
